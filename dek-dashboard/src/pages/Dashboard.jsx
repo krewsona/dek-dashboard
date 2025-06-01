@@ -9,7 +9,7 @@ function Dashboard() {
 
 
   useEffect(() => {
-    fetch('/scheduleData.json')
+    fetch('./scheduleData.json')
       .then((res) => res.json())
       .then((data) => {
 

@@ -7,7 +7,7 @@ function Schedule() {
   const [selectedTeam, setSelectedTeam] = useState('');
 
   useEffect(() => {
-    fetch('/scheduleData.json')
+    fetch('./scheduleData.json')
       .then((res) => res.json())
       .then((data) => {
         const sorted = [...data].sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -32,7 +32,7 @@ function Schedule() {
   };
 
 
-  
+
   return (
     <div className="schedule">
       <h2>Full Schedule</h2>
