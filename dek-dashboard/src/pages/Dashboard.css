@@ -1,0 +1,22 @@
+.dashboard-container {
+  padding: 2rem;
+  color: white;
+  background-color: #121212;
+}
+
+h2 {
+  color: yellow;
+  margin-top: 2rem;
+}
+
+.stat-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stat-list li {
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background-color: #1e1e1e;
+  border-left: 4px solid red;
+}
