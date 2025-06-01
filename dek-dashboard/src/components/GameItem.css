@@ -21,16 +21,26 @@
 }
 
 .add-stat-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3vw;
+  height: 3vw;
+  border-radius: 50%;
   background-color: red;
   color: white;
+  font-size: 2vw;
+  text-decoration: none;
   border: none;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  padding: 0.3rem 0.6rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .add-stat-btn:hover {
   background-color: darkred;
+}
+
+.plus-icon {
+  display: inline-block;
+  line-height: 1;
 }

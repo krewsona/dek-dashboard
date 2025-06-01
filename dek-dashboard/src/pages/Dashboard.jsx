@@ -1,58 +1,84 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import GameList from '../components/GameList';
 import './Dashboard.css';
 
 function Dashboard() {
   const [gamesToday, setGamesToday] = useState([]);
+  const [weeklyGames, setWeeklyGames] = useState([]);
   const [recentStats, setRecentStats] = useState([]);
 
-  // Dummy data for now
-  useEffect(() => {
-    setGamesToday([
-      {
-        id: 1,
-        team: 'Penguins',
-        opponent: 'Sharks',
-        time: '6:00 PM',
-        date: 'Today',
-      },
-    ]);
 
-    setRecentStats([
-      {
-        id: 101,
-        team: 'Penguins',
-        goals: 2,
-        assists: 1,
-        date: '5/29/2025',
-      },
-    ]);
+  useEffect(() => {
+    fetch('/scheduleData.json')
+      .then((res) => res.json())
+      .then((data) => {
+
+        // get today's date
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+
+        // Get one week from today
+        const oneWeekLater = new Date();
+        oneWeekLater.setDate(today.getDate() + 7);
+
+        // filter today's games
+        const todayGames = data.filter(
+          (game) => game.date === todayStr
+        );
+        setGamesToday(todayGames);
+
+        // filter weekly games
+        const weekGames = data.filter((game) => {
+          const gameDate = new Date(game.date);
+          return gameDate >= today && gameDate <= oneWeekLater;
+        });
+        setWeeklyGames(weekGames);
+
+        // load recent stats from local storage
+        const savedStats = JSON.parse(localStorage.getItem('userStats')) || [];
+        const sortedStats = savedStats.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setRecentStats(sortedStats.slice(0, 5));
+      })
+      .catch((err) => console.error('Failed to load games', err));
   }, []);
 
   return (
-    <div className="dashboard-container">
-      <h2>Today’s Game</h2>
-      {gamesToday.length > 0 ? (
-        <GameList games={gamesToday} showAddStat={true} />
-      ) : (
-        <p>No games today</p>
-      )}
+    <div className="dashboard">
+      <section className="dashboard-top">
+        <h2>Today’s Game(s)</h2>
+        {gamesToday.length > 0 ? (
+          <GameList games={gamesToday} showAddStat={true} />
+        ) : (
+          <p>No games today.</p>
+        )}
+      </section>
 
-      <h2>Weekly Schedule</h2>
-      <p>[ Preview of weekly schedule here – link to full schedule page ]</p>
+      <section className="dashboard-bottom">
+        <div className="dashboard-box left">
+          <h3>Weekly Schedule</h3>
+          <GameList games={weeklyGames} />
+        </div>
 
-      <h2>Recent Stats</h2>
-      {recentStats.length > 0 ? (
-        <ul className="stat-list">
-          {recentStats.map((stat) => (
-            <li key={stat.id}>
-              {stat.team} – {stat.goals}G / {stat.assists}A ({stat.date})
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No stats to show yet</p>
-      )}
+<div className="dashboard-box right">
+  <div className="stat-header">
+    <h3>Recent Stats</h3>
+<a href="#/stats" className="add-stats-link">
+  <span className="plus-icon">+</span> Add Stats
+</a>
+  </div>
+  {recentStats.length > 0 ? (
+    <ul className="stat-list">
+      {recentStats.map((stat) => (
+        <li key={stat.date + stat.team}>
+          <strong>{stat.team}</strong>: {stat.goals} Goal(s) / {stat.assists} Assist(s) on {stat.date}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>No stats to show.</p>
+  )}
+</div>
+      </section>
     </div>
   );
 }
