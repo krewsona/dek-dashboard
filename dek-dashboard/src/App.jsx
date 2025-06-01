@@ -9,7 +9,7 @@ import About from './pages/About';
 
 function App() {
   return (
-    <HashRouter>
+    <>
       <Header />
       <Routes>
         <Route path="/" element={<Login />} />
@@ -19,7 +19,7 @@ function App() {
         <Route path="/about" element={<About />} />
       </Routes>
       <Footer />
-    </HashRouter>
+    </>
   );
 }
 
