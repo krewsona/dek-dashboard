@@ -3,11 +3,21 @@
 
 
   {
-    "date": "2025-06-03",
+    "date": "2025-06-02",
     "time": "6:00 PM",
     "team": "Yetis",
     "opponent": "Irish Mafia"
   },
+    {
+    "date": "2025-06-02",
+    "time": "7:00 PM",
+    "team": "Hellfish D5",
+    "opponent": "Anarchy D4"
+  },
+
+
+
+
   {
     "date": "2025-06-08",
     "time": "7:00 PM",
@@ -156,12 +166,7 @@
     "team": "Hellfish D5",
     "opponent": "Crew D4"
   },
-  {
-    "date": "2025-06-08",
-    "time": "7:00 PM",
-    "team": "Hellfish D5",
-    "opponent": "Anarchy D4"
-  },
+
 
 
 
